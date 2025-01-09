@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Días Multa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #333333;
+            margin-top: 10px;
+            display: block;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultDiasMulta {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f5ff;
+            border-radius: 5px;
+            border: 1px solid #b3daff;
+        }
+        #diasMultaResult {
+            font-size: 18px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .watermark {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Días Multa</h1>
+        <form id="diasMultaForm">
+            <label for="monthlyIncome">Ingreso mensual (S/):
+                <span class="tooltip">ℹ️
+                    <span class="tooltiptext">Monto total que percibe la persona mensualmente.</span>
+                </span>
+            </label>
+            <input type="number" id="monthlyIncome" placeholder="Ingrese el ingreso mensual">
+
+            <label for="dailyQuotaPercentage">Porcentaje de cuota diaria (%):
+                <span class="tooltip">ℹ️
+                    <span class="tooltiptext">Porcentaje del ingreso diario que se aplicará como multa.</span>
+                </span>
+            </label>
+            <input type="number" id="dailyQuotaPercentage" placeholder="Ingrese el porcentaje de cuota diaria">
+
+            <label for="daysMulta">Número de días multa:
+                <span class="tooltip">ℹ️
+                    <span class="tooltiptext">Cantidad de días multa impuestos en la sentencia.</span>
+                </span>
+            </label>
+            <input type="number" id="daysMulta" placeholder="Ingrese el número de días multa">
+
+            <button type="button" onclick="calculateDiasMulta()">Calcular</button>
+        </form>
+
+        <div id="resultDiasMulta">
+            <h3>Resultado:</h3>
+            <p id="diasMultaResult">Ingrese los datos y presione "Calcular".</p>
+        </div>
+
+        <div class="watermark">Creado por: Abg. Juan Centurión Santisteban</div>
+    </div>
+
+    <script>
+        function calculateDiasMulta() {
+            const monthlyIncome = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const dailyQuotaPercentage = parseFloat(document.getElementById('dailyQuotaPercentage').value) || 0;
+            const daysMulta = parseInt(document.getElementById('daysMulta').value) || 0;
+
+            const dailyIncome = monthlyIncome / 30;
+            const dailyQuota = dailyIncome * (dailyQuotaPercentage / 100);
+            const totalMulta = dailyQuota * daysMulta;
+
+            document.getElementById('diasMultaResult').innerText = `Ingreso diario: S/ ${dailyIncome.toFixed(2)}, Cuota diaria: S/ ${dailyQuota.toFixed(2)}, Total multa: S/ ${totalMulta.toFixed(2)}.`;
+        }
+    </script>
+</body>
+</html>
